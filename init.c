@@ -6,7 +6,7 @@
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:13:52 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/17 12:32:47 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:06:06 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_philo	**init_philos(t_data *data)
 		if (!philos[m])
 			return (NULL);
 		philos[m]->data = data;
+		//printf("%d - %d\n",m,  philos[m]->data->number_of_philos);
 		philos[m]->how_many_times_eated = 0;
 		philos[m]->last_meal = 0;
 		philos[m]->philo_id = m + 1;

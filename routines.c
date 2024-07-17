@@ -6,7 +6,7 @@
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:24:55 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/17 13:48:04 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:18:31 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	*philo_routines(void *pointer)
 	t_philo	*philo;
 
 	philo = (t_philo *)pointer;
+
+	//printf("%d\n",philo->data->number_of_eatings);
 
 	philo->last_meal = philo->data->begin_time;
 	if (philo->philo_id % 2 == 0)

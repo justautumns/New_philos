@@ -6,7 +6,7 @@
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:24:12 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/17 13:43:19 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:20:01 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,20 @@ void	*test_routine(void *pointer)
 }
 void	thread_create(t_data *data)
 {
-	t_data	*pointer;
 	int		m;
 	
-	pointer = data;
 	m = 0;
 	data->begin_time = get_time();
-	while (m < pointer->number_of_philos)
+	if (data->number_of_philos > 1)
 	{
-		if (pthread_create(&pointer->philos[m]->thread, NULL, &philo_routines, pointer) != 0)
+		if (pthread_create(&data->monitor, NULL, &doch_sauron, data) != 0)
+			return ;
+	}
+	while (m < data->number_of_philos)
+	{
+		if (pthread_create(&data->philos[m]->thread, NULL, &philo_routines, data->philos[m]) != 0)
 			return ;
 		m++;
-	}
-	if (pointer->number_of_philos > 1)
-	{
-		if (pthread_create(&pointer->monitor, NULL, &doch_sauron, pointer) != 0)
-			return ;
 	}
 }
 void	threads_join(t_data *data)

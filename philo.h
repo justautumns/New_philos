@@ -6,7 +6,7 @@
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:38:23 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/17 13:42:58 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:18:51 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,7 @@
 # include <pthread.h>
 # include <stdbool.h>
 
-struct s_data;
-
-typedef struct s_philo
-{
-	pthread_t		thread;
-	int				philo_id;
-	int				how_many_times_eated;
-	int				left_spoon_no;
-	int				right_spoon_no;
-	time_t			last_meal;
-	struct s_data	*data;
-}	t_philo;
+typedef struct s_philo t_philo;
 
 typedef struct s_data
 {
@@ -51,6 +40,16 @@ typedef struct s_data
 	bool			dead_flag;
 }	t_data;
 
+typedef struct s_philo
+{
+	pthread_t		thread;
+	int				philo_id;
+	int				how_many_times_eated;
+	int				left_spoon_no;
+	int				right_spoon_no;
+	time_t			last_meal;
+	struct s_data	*data;
+}	t_philo;
 
 // Utils
 int			ft_atoi(char *str);
