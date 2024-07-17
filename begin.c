@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   begin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:24:12 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/17 15:20:01 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/17 22:44:58 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ void	*test_routine(void *pointer)
 void	thread_create(t_data *data)
 {
 	int		m;
-	
+
 	m = 0;
 	data->begin_time = get_time();
-	if (data->number_of_philos > 1)
-	{
-		if (pthread_create(&data->monitor, NULL, &doch_sauron, data) != 0)
-			return ;
-	}
 	while (m < data->number_of_philos)
 	{
 		if (pthread_create(&data->philos[m]->thread, NULL, &philo_routines, data->philos[m]) != 0)
 			return ;
 		m++;
+	}
+	if (data->number_of_philos > 1)
+	{
+		if (pthread_create(&data->monitor, NULL, &doch_sauron, data) != 0)
+			return ;
 	}
 }
 void	threads_join(t_data *data)

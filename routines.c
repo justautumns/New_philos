@@ -3,43 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   routines.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:24:55 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/17 15:26:19 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/17 23:00:43 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
-
-void *doch_sauron(void	*pointer)
-{
-	t_data *data;
-	int		m;
-
-	data = (t_data *)pointer;
-
-	while (!data->dead_flag)
-	{
-		m = 0;
-		while (m < data->number_of_philos)
-		{
-			pthread_mutex_lock(&data->print_mutex);
-			if (get_time() - data->philos[m]->last_meal > (unsigned long)data->time_to_die)
-			{
-				printf("%ld %d died\n", get_time() - data->begin_time, data->philos[m]->philo_id);
-				data->dead_flag = true;
-				pthread_mutex_unlock(&data->print_mutex);
-				return (NULL);
-			}
-			pthread_mutex_unlock(&data->print_mutex);
-		m++;
-		}
-		my_usleep(1000);
-	}
-	return (NULL);
-}
 static void	printings(t_philo *philo, char *str)
 {
 	pthread_mutex_lock(&philo->data->print_mutex);
@@ -47,13 +19,49 @@ static void	printings(t_philo *philo, char *str)
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
-static void	eating(t_philo *philo)
+int	check_bakalim(t_philo *philo)
+{
+	time_t	time;
+
+	time = get_time();
+	pthread_mutex_lock(&philo->data->dead_mutex);
+	if ((time - philo->last_meal) > philo->data->time_to_die)
+	{
+		philo->data->dead_flag = true;
+		printings(philo, "died");
+		pthread_mutex_unlock(&philo->data->dead_mutex);
+		return (-1);
+	}
+	pthread_mutex_unlock(&philo->data->dead_mutex);
+	return (0);
+}
+void *doch_sauron(void	*pointer)
+{
+	t_data *data;
+	int		m;
+
+	data = (t_data *)pointer;
+	m = 0;
+	while (m < data->number_of_philos)
+	{
+		//pthread_mutex_lock(&data->print_mutex);
+		if (check_bakalim(data->philos[m]) == -1)
+			break ;
+		//pthread_mutex_unlock(&data->print_mutex);
+		m++;
+		my_usleep(1000);
+	}
+	return (NULL);
+}
+
+static int	eating(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->forks[philo->left_spoon_no]);
 	printings(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->data->forks[philo->right_spoon_no]);
 	printings(philo, "has taken a fork");
-	printings(philo, "is eating");
+	if (check_bakalim(philo) != -1)
+		printings(philo, "is eating");
 	pthread_mutex_lock(&philo->data->print_mutex);
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->data->print_mutex);
@@ -63,13 +71,18 @@ static void	eating(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->print_mutex);
 	pthread_mutex_unlock(&philo->data->forks[philo->left_spoon_no]);
 	pthread_mutex_unlock(&philo->data->forks[philo->right_spoon_no]);
+	return (0);
 }
 
-static void	sleeping_thinking(t_philo *philo)
+static int	sleeping_thinking(t_philo *philo)
 {
-	printings(philo, "is sleeping");
+	if (check_bakalim(philo) != -1)
+		printings(philo, "is sleeping");
 	my_usleep(philo->data->time_to_sleep);
-	printings(philo, "is thinking");
+	if (check_bakalim(philo) != -1)
+		printings(philo, "is thinking");
+	my_usleep(philo->data->time_to_die - (philo->data->time_to_eat + philo->data->time_to_sleep));
+	return (0);
 }
 void	*philo_routines(void *pointer)
 {
@@ -81,9 +94,9 @@ void	*philo_routines(void *pointer)
 	pthread_mutex_lock(&philo->data->dead_mutex);
 	philo->last_meal = philo->data->begin_time;
 	pthread_mutex_unlock(&philo->data->dead_mutex);
-	if (philo->philo_id % 2 == 0)
+	 if (philo->philo_id % 2 == 0)
 		my_usleep(100);
-	while (!philo->data->dead_flag == false)
+	while (philo->data->dead_flag == false)
 	{
 		eating(philo);
 		if (philo->data->number_of_eatings != 0 && philo->how_many_times_eated >= philo->data->number_of_eatings)

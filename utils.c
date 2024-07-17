@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 14:13:57 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/16 18:35:06 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/17 21:13:39 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
 int	ft_atoi(char *str)
-{ 
+{
 	unsigned long long	res;
 	int					sign;
 	int					k;
@@ -51,18 +51,4 @@ void	my_usleep(int difference)
 	start = get_time();
 	while ((get_time() - start) < (uint64_t)difference)
 		usleep(100);
-}
-void	free_all(t_data *data)
-{
-	t_data	*pointer;
-	int		k;
-
-	pointer = data;
-	while (k < pointer->number_of_philos)
-	{
-		free(&pointer->philos[k]);
-		free(&pointer->forks[k]);
-		k++;
-	}
-	free(data);
 }

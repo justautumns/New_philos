@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:13:52 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/17 15:06:06 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/17 21:20:11 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	init_spoons(t_data *data, t_philo *philo, int m)
 		philo->left_spoon_no = (m + 1) % data->number_of_philos;
 		philo->right_spoon_no = m;
 	}
-	else if (data->number_of_philos % 2 != 0)
+	else
 	{
 		philo->left_spoon_no = m;
 		philo->right_spoon_no = (m + 1) % data->number_of_philos;

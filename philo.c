@@ -3,15 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:47:53 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/17 15:14:59 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/17 21:18:09 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
+void	check(t_data *data)
+{
+	int	m;
+
+	m = 0;
+	printf("%d\n",data->number_of_philos);
+	while (m < data->number_of_philos)
+	{
+		printf("Philo id :%d , %d\n", data->philos[m]->philo_id, data->philos[m]->how_many_times_eated);
+		m++;
+	}
+}
 void	freeing(t_data *data)
 {
 	int	k;
@@ -48,6 +60,7 @@ int main(int ac, char **av)
 	thread_create(start);
 	threads_join(start);
 	free_mutexes(start);
+	check(start);
 	freeing(start);
 	return (0);
 }

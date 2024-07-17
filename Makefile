@@ -1,6 +1,7 @@
 NAME = philo
 CC = cc
-FLAGS = -Wall -Wextra -Werror -lpthread -g #-fsanitize=thread
+FLAGS = -Wall -Wextra -Werror -g #-fsanitize=thread
+PFLAGS = -lpthread
 SRCS =	philo.c \
 		utils.c \
 		init.c \
@@ -14,10 +15,10 @@ RM = rm -rf
 all : $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(PFLAGS) $(FLAGS) $(OBJS) -o $(NAME)
 
 %.o : %.c
-	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(FLAGS)  $(INCLUDES) -c $< -o $@
 
 clean :
 	$(RM) $(OBJS)
