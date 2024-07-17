@@ -6,7 +6,7 @@
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:24:55 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/17 15:18:31 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:26:19 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ void	*philo_routines(void *pointer)
 	philo = (t_philo *)pointer;
 
 	//printf("%d\n",philo->data->number_of_eatings);
-
+	pthread_mutex_lock(&philo->data->dead_mutex);
 	philo->last_meal = philo->data->begin_time;
+	pthread_mutex_unlock(&philo->data->dead_mutex);
 	if (philo->philo_id % 2 == 0)
 		my_usleep(100);
 	while (!philo->data->dead_flag == false)
