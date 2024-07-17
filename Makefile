@@ -1,11 +1,12 @@
 NAME = philo
 CC = cc
-FLAGS = -Wall -Wextra -Werror -lpthread #-fsanitize=thread
-SRCS = parser.c \
+FLAGS = -Wall -Wextra -Werror -lpthread -g #-fsanitize=thread
+SRCS =	philo.c \
 		utils.c \
-		philo.c \
-		threads.c \
-		errorchecks.c 
+		init.c \
+		errorchecks.c \
+		begin.c \
+		routines.c
 INCLUDES = -I./
 OBJS = $(SRCS:.c=.o)
 RM = rm -rf

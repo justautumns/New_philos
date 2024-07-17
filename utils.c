@@ -6,37 +6,35 @@
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 14:13:57 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/06/30 23:29:03 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:35:06 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
 int	ft_atoi(char *str)
-{
-	int	i;
-	int	sign;
-	int	result;
+{ 
+	unsigned long long	res;
+	int					sign;
+	int					k;
 
-	i = 0;
-	result = 0;
+	res = 0;
 	sign = 1;
-	if (!str)
-		return (-1);
-	while(str[i] && ((str[i] >= 9 && str[i] <= 13) || (str[i] == 32)))
-		i++;
-	if (str[i] == '+' || str[i] == '-')
+	k = 0;
+	while ((str[k] >= 9 && str[k] <= 13) || str[k] == ' ')
+		k++;
+	if (str[k] == '-' || str[k] == '+')
 	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
+		if (str[k] == '-')
+			sign = -1;
+		k++;
 	}
-	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
+	while (str[k] >= '0' && str[k] <= '9')
 	{
-		result = result * 10 + str[i] - 48;
-		i++;
+		res = res * 10 + (str[k] - 48);
+		k++;
 	}
-	return (result * sign);
+	return (res * sign);
 }
 uint64_t	get_time()
 {
@@ -53,20 +51,6 @@ void	my_usleep(int difference)
 	start = get_time();
 	while ((get_time() - start) < (uint64_t)difference)
 		usleep(100);
-}
-void	mutex_destroying(t_data *data)
-{
-	t_data	*pointer;
-	int		k;
-
-	k = 0;
-	pointer = data;
-	pthread_mutex_destroy(&pointer->f_print);
-	while (k < pointer->number_of_philos)
-	{
-		pthread_mutex_destroy(&pointer->forks[k]);
-		k++;
-	}
 }
 void	free_all(t_data *data)
 {

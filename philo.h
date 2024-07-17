@@ -6,7 +6,7 @@
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:38:23 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/06/30 23:13:13 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:42:58 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ typedef struct s_philo
 	pthread_t		thread;
 	int				philo_id;
 	int				how_many_times_eated;
-	int				left_fork_no;
-	int				right_fork_no;
+	int				left_spoon_no;
+	int				right_spoon_no;
 	time_t			last_meal;
 	struct s_data	*data;
 }	t_philo;
@@ -43,9 +43,10 @@ typedef struct s_data
 	time_t			time_to_sleep;
 	int				number_of_philos;
 	int				number_of_eatings;
-	pthread_mutex_t	f_print;
+	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	*forks;
-	t_philo			*philos;
+	pthread_mutex_t	dead_mutex;
+	t_philo			**philos;
 	pthread_t		monitor;
 	bool			dead_flag;
 }	t_data;
@@ -60,11 +61,16 @@ void		my_usleep(int difference);
 void		mutex_destroying(t_data *data);
 void		free_all(t_data *data);
 
-// INITIALIZATION Idk how to write this word and I can't pronounce it
-t_data		*init(char **av);
+// INIT
+t_data		*init_data(char **av);
+int			init_mutexes(t_data *data);
 
-// ROUTINE
-void		*routine(void *arg);
-void		*inadina_sauron(void *arg);
+// TESTS
+void	test(t_data *data);
 
+// BEGINNING THE PROGRAMM
+void 	*doch_sauron(void	*pointer);
+void	*philo_routines(void *pointer);
+void	thread_create(t_data *data);
+void	threads_join(t_data *data);
 #endif

@@ -1,17 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   errorchecks.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:03:04 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/06/30 17:03:39 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:13:33 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
+void	*ft_error(char *str, t_data *data)
+{
+	if (data != NULL)
+		return (NULL);
+	while (*str)
+		write(2, str++, 1);
+	return (NULL);
+}
 static bool	input_check(char *str)
 {
 	if (!str)
@@ -23,14 +31,6 @@ static bool	input_check(char *str)
 		str++;
 	}
 	return (true);
-}
-void	*ft_error(char *str, t_data *data)
-{
-	if (data != NULL)
-		return (NULL);
-	while (*str)
-		write(2, str++, 1);
-	return (NULL);
 }
 static bool	overflow_check(char *str)
 {
@@ -45,6 +45,8 @@ static bool	overflow_check(char *str)
 }
 bool	error_check(char **str)
 {
+	if (!str[1] || !str[2] || !str[3] || !str[4])
+		return (ft_error("Please enter in correct order\n", NULL), false);
 	if (ft_atoi(str[1]) > 200 || ft_atoi(str[1]) <= 0
 		|| !input_check(str[1]) || !overflow_check(str[1]))
 		return (ft_error("Error: Incorrect philo value\n", NULL), false);
