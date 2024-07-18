@@ -6,7 +6,7 @@
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:24:55 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/18 16:01:33 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:43:11 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int	sleeping_thinking(t_philo *philo)
 	my_usleep(philo->data->time_to_sleep);
 	if (!philo->data->dead_flag)
 		printings(philo, "is thinking");
-	my_usleep((philo->data->time_to_die - (philo->data->time_to_eat + philo->data->time_to_sleep)) / 2);
+	my_usleep((philo->data->time_to_die - (philo->data->time_to_eat + philo->data->time_to_sleep)));
 	return (0);
 }
 void	*philo_routines(void *pointer)
