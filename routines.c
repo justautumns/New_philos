@@ -6,7 +6,7 @@
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:24:55 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/18 16:43:11 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:52:21 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ static int	eating(t_philo *philo)
 		return (0);
 	pthread_mutex_lock(&philo->data->forks[philo->left_spoon_no]);
 	printings(philo, "has taken a fork");
+	if (philo->data->number_of_philos == 1)
+	{
+		my_usleep(philo->data->time_to_die);
+		pthread_mutex_unlock(&philo->data->forks[philo->left_spoon_no]);
+		return (printings(philo, "died"), -69);
+	}
 	pthread_mutex_lock(&philo->data->forks[philo->right_spoon_no]);
 	printings(philo, "has taken a fork");
 	if (!philo->data->dead_flag)
@@ -106,7 +112,8 @@ void	*philo_routines(void *pointer)
 	{
 		if ((philo->data->number_of_eatings != 0 && philo->how_many_times_eated >= philo->data->number_of_eatings) || philo->data->dead_flag == true)
 			break ;
-		eating(philo);
+		if (eating(philo) == -69)
+			break;
 		sleeping_thinking(philo);
 	}
 	return (NULL);
