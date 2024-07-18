@@ -6,7 +6,7 @@
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:24:55 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/18 15:26:06 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:01:33 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ static void	printings(t_philo *philo, char *str)
 
 bool	check_bakalim(t_philo *philo)
 {
-	if (philo->data->number_of_eatings != 0 && philo->how_many_times_eated >= philo->data->number_of_eatings)
-		return (false);
 	time_t	time;
 
 	time = get_time();
+	if (philo->data->number_of_eatings != 0 && philo->how_many_times_eated >= philo->data->number_of_eatings)
+		return (false);
 	if ((time - philo->last_meal) > philo->data->time_to_die)
 	{
 		printf("%ld %d died\n", get_time() - philo->data->begin_time, philo->philo_id);
@@ -87,7 +87,7 @@ static int	sleeping_thinking(t_philo *philo)
 	my_usleep(philo->data->time_to_sleep);
 	if (!philo->data->dead_flag)
 		printings(philo, "is thinking");
-	my_usleep(philo->data->time_to_die - (philo->data->time_to_eat + philo->data->time_to_sleep));
+	my_usleep((philo->data->time_to_die - (philo->data->time_to_eat + philo->data->time_to_sleep)) / 2);
 	return (0);
 }
 void	*philo_routines(void *pointer)
