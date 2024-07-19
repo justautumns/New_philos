@@ -6,7 +6,7 @@
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:24:12 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/18 11:49:51 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/18 23:42:22 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ void	threads_join(t_data *data)
 		pthread_join(data->philos[m]->thread, NULL);
 		m++;
 	}
-	pthread_join(data->monitor, NULL);
+	if (data->number_of_philos)
+		pthread_join(data->monitor, NULL);
 }

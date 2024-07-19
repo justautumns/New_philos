@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:13:52 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/17 21:20:11 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/20 00:59:35 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
-void test(t_data *data)
-{
-	int k = 0;
-	t_data *x = data;
-	while(k < x->number_of_philos)
-	{
-		printf("Philo %d : Left spoon %d Right spoon %d\n", x->philos[k]->philo_id, x->philos[k]->left_spoon_no, x->philos[k]->right_spoon_no);
-		k++;
-	}
-}
+// void test(t_data *data)
+// {
+// 	int k = 0;
+// 	t_data *x = data;
+// 	while(k < x->number_of_philos)
+// 	{
+// 		printf("Philo %d : Left spoon %d Right spoon %d\n", x->philos[k]->philo_id, x->philos[k]->left_spoon_no, x->philos[k]->right_spoon_no);
+// 		k++;
+// 	}
+// }
 
 int	init_mutexes(t_data *data)
 {
@@ -43,17 +43,14 @@ int	init_mutexes(t_data *data)
 		return (-1);
 	return (0);
 }
-void	init_spoons(t_data *data, t_philo *philo, int m)
+void	init_spoons(t_data *data, t_philo *philo)
 {
-	if (data->number_of_philos % 2 == 0)
+	philo->forks[0] = philo->philo_id - 1;
+	philo->forks[1] = (philo->philo_id) % data->number_of_philos;
+	if (philo->philo_id % 2 == 0)
 	{
-		philo->left_spoon_no = (m + 1) % data->number_of_philos;
-		philo->right_spoon_no = m;
-	}
-	else
-	{
-		philo->left_spoon_no = m;
-		philo->right_spoon_no = (m + 1) % data->number_of_philos;
+		philo->forks[0] = (philo->philo_id) % data->number_of_philos;
+		philo->forks[1] = philo->philo_id - 1;
 	}
 }
 t_philo	**init_philos(t_data *data)
@@ -75,7 +72,7 @@ t_philo	**init_philos(t_data *data)
 		philos[m]->how_many_times_eated = 0;
 		philos[m]->last_meal = 0;
 		philos[m]->philo_id = m + 1;
-		init_spoons(data, philos[m], m);
+		init_spoons(data, philos[m]);
 	m++;
 	}
 	return (philos);
