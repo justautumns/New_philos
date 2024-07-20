@@ -6,7 +6,7 @@
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:24:55 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/20 01:07:00 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/20 02:37:55 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool	check_bakalim(t_philo *philo)
 	return (false);
 }
 
-void	is_time_delay(time_t k)
+void	equel_time(time_t k)
 {
 	while (get_time() < (uint64_t)k)
 		continue;
@@ -51,13 +51,13 @@ void *doch_sauron(void	*pointer)
 
 	data = (t_data *)pointer;
 	m = 0;
-	is_time_delay(data->begin_time);
+	equel_time(data->begin_time);
 	while (m < data->number_of_philos)
 	{
 		pthread_mutex_lock(&data->print_mutex);
 		if (check_bakalim(data->philos[m]) == true)
 		{
-			data->dead_flag = true;
+			data->philos[m]->data->dead_flag = true;
 			pthread_mutex_unlock(&data->print_mutex);
 			break ;
 		}
@@ -125,15 +125,15 @@ void	*philo_routines(void *pointer)
 	pthread_mutex_lock(&philo->data->dead_mutex);
 	philo->last_meal = philo->data->begin_time;
 	pthread_mutex_unlock(&philo->data->dead_mutex);
-	is_time_delay(philo->data->begin_time);
+	equel_time(philo->data->begin_time);
 	 if (philo->philo_id % 2 == 0)
 	{
 		printings(philo, "is thinking");
 		my_usleep(100);
 	}
-	while (1)
+	while (philo->data->dead_flag == false)
 	{
-		if ((philo->data->number_of_eatings != 0 && philo->how_many_times_eated >= philo->data->number_of_eatings) || philo->data->dead_flag == true)
+		if ((philo->data->number_of_eatings != 0 && philo->how_many_times_eated >= philo->data->number_of_eatings))
 		{
 			break ;
 		}
