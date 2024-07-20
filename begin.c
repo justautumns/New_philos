@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   begin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:24:12 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/18 23:42:22 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:16:51 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,33 @@ void	*test_routine(void *pointer)
 	pthread_mutex_unlock(&data->dead_mutex);
 	return (NULL);
 }
-void	thread_create(t_data *data)
+int	thread_create(t_data *data)
 {
 	int		m;
+	int		k;
 
 	m = 0;
 	data->begin_time = get_time();
 	while (m < data->number_of_philos)
 	{
 		if (pthread_create(&data->philos[m]->thread, NULL, &philo_routines, data->philos[m]) != 0)
-			return ;
+		{
+			k = m - 1;
+			while (k > 0)
+			{
+				pthread_join(data->philos[k]->thread, NULL);
+				k--;
+			}
+			return (-1);
+		}
 		m++;
 	}
 	if (data->number_of_philos > 1)
 	{
 		if (pthread_create(&data->monitor, NULL, &doch_sauron, data) != 0)
-			return ;
+			return (-1);
 	}
+	return (0);
 }
 void	threads_join(t_data *data)
 {
