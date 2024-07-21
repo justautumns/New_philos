@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:24:12 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/20 20:16:51 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:42:29 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	thread_create(t_data *data)
 			k = m - 1;
 			while (k > 0)
 			{
-				pthread_join(data->philos[k]->thread, NULL);
+				pthread_detach(data->philos[k]->thread);
 				k--;
 			}
 			return (-1);
@@ -55,7 +55,6 @@ int	thread_create(t_data *data)
 void	threads_join(t_data *data)
 {
 	int	m;
-
 	m = 0;
 	while (m < data->number_of_philos)
 	{

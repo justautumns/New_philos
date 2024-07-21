@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:13:52 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/20 19:51:33 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:34:53 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ t_data	*init_data(char **av)
 	else
 		my_data->number_of_eatings = 0;
 	my_data->dead_flag = false;
+	my_data->eat_enough = false;
 	my_data->philos = init_philos(my_data);
 	return (my_data);
 }

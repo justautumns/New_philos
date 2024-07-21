@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:38:23 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/20 20:00:17 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:44:32 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_data
 	t_philo			**philos;
 	pthread_t		monitor;
 	bool			dead_flag;
+	bool			eat_enough;
 }	t_data;
 
 typedef struct s_philo
@@ -64,7 +65,7 @@ t_data		*init_data(char **av);
 int			init_mutexes(t_data *data);
 
 // TESTS
-void	test(t_data *data);
+//void	test(t_data *data);
 
 // BEGINNING THE PROGRAMM
 void 	*doch_sauron(void	*pointer);
