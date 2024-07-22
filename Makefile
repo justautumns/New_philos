@@ -6,7 +6,8 @@ SRCS =	philo.c \
 		init.c \
 		errorchecks.c \
 		begin.c \
-		routines.c
+		routines.c \
+		sauron.c
 INCLUDES = -I./
 OBJS = $(SRCS:.c=.o)
 RM = rm -rf

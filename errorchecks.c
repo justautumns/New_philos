@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:03:04 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/20 18:58:47 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/22 21:25:28 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_error(char *str, t_data *data)
 	while (*str)
 		write(2, str++, 1);
 }
+
 static bool	input_check(char *str)
 {
 	if (!str)
@@ -34,6 +35,7 @@ static bool	input_check(char *str)
 	}
 	return (true);
 }
+
 static bool	overflow_check(char *str)
 {
 	int	m;
@@ -42,9 +44,10 @@ static bool	overflow_check(char *str)
 	while (str[m])
 		m++;
 	if (m >= 10 && str[0] > '2')
-			return (false);
+		return (false);
 	return (true);
 }
+
 bool	error_check(char **str)
 {
 	if (!str[1] || !str[2] || !str[3] || !str[4])
@@ -60,9 +63,11 @@ bool	error_check(char **str)
 		return (ft_error("Error: Incorrect time to eat value\n", NULL), false);
 	if (ft_atoi(str[4]) <= 0 || !input_check(str[4])
 		|| ft_atoi(str[4]) > INT_MAX || !overflow_check(str[4]))
-		return (ft_error("Error: Incorrect time to sleep value\n", NULL), false);
+		return (ft_error("Error: Incorrect time to sleep value\n",
+				NULL), false);
 	if ((str[5]) && ((ft_atoi(str[5]) < 0 || !input_check(str[5])
-		|| ft_atoi(str[5]) > INT_MAX) || !overflow_check(str[5])))
-		return (ft_error("Error: Incorrect number of time to eat value\n", NULL), false);
+				|| ft_atoi(str[5]) > INT_MAX) || !overflow_check(str[5])))
+		return (ft_error("Error: Incorrect number of time to eat value\n",
+				NULL), false);
 	return (true);
 }

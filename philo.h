@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:38:23 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/21 19:44:32 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/22 21:31:08 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <pthread.h>
 # include <stdbool.h>
 
-typedef struct s_philo t_philo;
+typedef struct s_philo	t_philo;
 
 typedef struct s_data
 {
@@ -53,7 +53,7 @@ typedef struct s_philo
 
 // Utils
 int			ft_atoi(char *str);
-uint64_t	get_time();
+uint64_t	get_time(void);
 bool		error_check(char **str);
 void		ft_error(char *str, t_data *data);
 void		my_usleep(int difference);
@@ -68,8 +68,9 @@ int			init_mutexes(t_data *data);
 //void	test(t_data *data);
 
 // BEGINNING THE PROGRAMM
-void 	*doch_sauron(void	*pointer);
-void	*philo_routines(void *pointer);
-int		thread_create(t_data *data);
-void	threads_join(t_data *data);
+void		*doch_sauron(void *pointer);
+void		*philo_routines(void *pointer);
+void		printings(t_philo *philo, char *str);
+int			thread_create(t_data *data);
+void		threads_join(t_data *data);
 #endif
