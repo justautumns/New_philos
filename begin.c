@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   begin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:24:12 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/22 21:21:57 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:24:36 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*test_routine(void *pointer)
 	data = (t_data *)pointer;
 	pthread_mutex_lock(&data->dead_mutex);
 	printf("deneme \n");
-	my_usleep(1000);
+	my_usleep(1000, NULL);
 	pthread_mutex_unlock(&data->dead_mutex);
 	return (NULL);
 }
@@ -27,10 +27,8 @@ void	*test_routine(void *pointer)
 int	thread_create(t_data *data)
 {
 	int		m;
-	int		k;
 
 	m = 0;
-	k = 1;
 	data->begin_time = get_time();
 	while (m < data->number_of_philos)
 	{

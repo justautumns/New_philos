@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 14:13:57 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/22 21:39:14 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:58:48 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,28 @@ uint64_t	get_time(void)
 	return ((time.tv_sec * (uint64_t)1000) + time.tv_usec / 1000);
 }
 
-void	my_usleep(int difference)
+void	my_usleep(int difference, t_philo *philo)
 {
 	uint64_t	start;
 
 	start = get_time();
-	while ((get_time() - start) < (uint64_t)difference)
-		usleep(100);
+	if (philo == NULL)
+	{
+		while ((get_time() - start) < (uint64_t)difference)
+			usleep(100);
+	}
+	else
+	{
+		while ((get_time() - start) < (uint64_t)difference)
+		{
+			pthread_mutex_lock(&philo->data->dead_mutex);
+			if (philo->data->dead_flag == true)
+			{
+				pthread_mutex_unlock(&philo->data->dead_mutex);
+				break ;
+			}
+			pthread_mutex_unlock(&philo->data->dead_mutex);
+			usleep(100);
+		}
+	}
 }

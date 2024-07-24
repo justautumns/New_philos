@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:38:23 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/22 21:31:08 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:39:10 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			ft_atoi(char *str);
 uint64_t	get_time(void);
 bool		error_check(char **str);
 void		ft_error(char *str, t_data *data);
-void		my_usleep(int difference);
+void		my_usleep(int difference, t_philo *philo);
 void		freeing(t_data *data);
 void		free_mutexes(t_data *data);
 
