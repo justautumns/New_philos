@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sauron.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:15:56 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/24 13:29:48 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/24 23:37:41 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,17 @@ void	*doch_sauron(void	*pointer)
 
 	data = (t_data *)pointer;
 	m = 0;
-	my_usleep(500, NULL);
+	even_f_times(data->begin_time);
 	while (m < data->number_of_philos)
 	{
-		if (check_bakalim(data->philos[m]) == true)
+		if (check_bakalim(&data->philos[m]) == true)
 			break ;
-		else if (hungry_or_not(data->philos[m]) == true)
+		else if (hungry_or_not(&data->philos[m]) == true)
 			break ;
 		m++;
 		if (m == data->number_of_philos)
 			m = 0;
+		usleep(1000);
 	}
 	return (NULL);
 }

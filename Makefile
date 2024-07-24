@@ -1,6 +1,6 @@
 NAME = philo
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g #-fsanitize=thread #-lpthread -g
+FLAGS = -Wall -Wextra -Werror  #-fsanitize=thread #-lpthread -g
 SRCS =	philo.c \
 		utils.c \
 		init.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:38:23 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/24 13:39:10 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/24 23:23:35 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,12 @@ typedef struct s_data
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	dead_mutex;
-	t_philo			**philos;
+	t_philo			*philos;
 	pthread_t		monitor;
 	bool			dead_flag;
 	bool			eat_enough;
+	bool			f_something_happens;
+	time_t			begin_for_monitor;
 }	t_data;
 
 typedef struct s_philo
@@ -59,6 +61,7 @@ void		ft_error(char *str, t_data *data);
 void		my_usleep(int difference, t_philo *philo);
 void		freeing(t_data *data);
 void		free_mutexes(t_data *data);
+void		even_f_times(uint64_t time);
 
 // INIT
 t_data		*init_data(char **av);

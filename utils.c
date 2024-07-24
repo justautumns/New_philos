@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 14:13:57 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/24 13:58:48 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/24 23:13:42 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ int	ft_atoi(char *str)
 	return (res * sign);
 }
 
+void	even_f_times(uint64_t time)
+{
+	while (get_time() < time)
+		continue;
+}
 uint64_t	get_time(void)
 {
 	struct timeval	time;

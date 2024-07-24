@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:47:53 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/22 21:28:48 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/24 23:40:27 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,14 @@ void	check(t_data *data)
 	while (m < data->number_of_philos)
 	{
 		printf("Philo id :%d , how many times ate: %d\n",
-			data->philos[m]->philo_id,
-			data->philos[m]->how_many_times_eated);
+			data->philos[m].philo_id,
+			data->philos[m].how_many_times_eated);
 		m++;
 	}
 }
 
 void	freeing(t_data *data)
 {
-	int	k;
-
-	k = 0;
-	while (k < data->number_of_philos)
-	{
-		free(data->philos[k]);
-		k++;
-	}
 	free(data->philos);
 	free(data);
 }
@@ -68,7 +60,6 @@ int	main(int ac, char **av)
 		return (ft_error("Thread Error\n", start), -1);
 	threads_join(start);
 	free_mutexes(start);
-	check(start);
 	freeing(start);
 	return (0);
 }

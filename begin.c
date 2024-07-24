@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   begin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:24:12 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/24 13:24:36 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/24 23:47:22 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,15 @@ int	thread_create(t_data *data)
 	int		m;
 
 	m = 0;
-	data->begin_time = get_time();
+	data->begin_time = get_time() + (data->number_of_philos * 10);
 	while (m < data->number_of_philos)
 	{
-		if (pthread_create(&data->philos[m]->thread, NULL,
-				&philo_routines, data->philos[m]) != 0)
+		if (pthread_create(&data->philos[m].thread, NULL,
+				&philo_routines, &data->philos[m]) != 0)
+		{
+			data->f_something_happens = true;
 			return (-1);
+		}
 		m++;
 	}
 	if (data->number_of_philos > 1)
@@ -52,9 +55,11 @@ void	threads_join(t_data *data)
 	m = 0;
 	while (m < data->number_of_philos)
 	{
-		pthread_join(data->philos[m]->thread, NULL);
+		pthread_join(data->philos[m].thread, NULL);
+		if (data->f_something_happens == true)
+			break ;
 		m++;
 	}
-	if (data->number_of_philos)
+	if (data->number_of_philos > 1)
 		pthread_join(data->monitor, NULL);
 }
