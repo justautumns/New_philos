@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:24:55 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/24 23:39:27 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/29 15:29:41 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	eating(t_philo *philo)
 	if (am_i_dead(philo) == 1)
 		return (pthread_mutex_unlock(&philo->data->forks[philo->forks[0]]),
 			-16);
-	printings(philo, "has taken left a fork");
+	printings(philo, "has taken a fork");
 	if (philo->data->number_of_philos == 1)
 	{
 		my_usleep(philo->data->time_to_die, philo);
@@ -60,7 +60,7 @@ static int	eating(t_philo *philo)
 	if (am_i_dead(philo) == 1)
 		return (pthread_mutex_unlock(&philo->data->forks[philo->forks[1]]),
 			pthread_mutex_unlock(&philo->data->forks[philo->forks[0]]), -16);
-	printings(philo, "has taken right a fork");
+	printings(philo, "has taken a fork");
 	eating2(philo);
 	return (0);
 }
@@ -102,7 +102,6 @@ void	*philo_routines(void *pointer)
 	pthread_mutex_lock(&philo->data->dead_mutex);
 	philo->last_meal = philo->data->begin_time;
 	pthread_mutex_unlock(&philo->data->dead_mutex);
-	even_f_times(philo->data->begin_time);
 	if (philo->philo_id % 2)
 		my_usleep(100, NULL);
 	while (1)

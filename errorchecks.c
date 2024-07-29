@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:03:04 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/23 16:11:53 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/26 16:40:05 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	ft_error(char *str, t_data *data)
 {
 	if (data != NULL)
 	{
-		freeing(data);
 		free_mutexes(data);
+		freeing(data);
 	}
 	while (*str)
 		write(2, str++, 1);

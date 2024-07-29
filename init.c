@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:13:52 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/24 22:52:56 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/29 18:52:27 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ int	init_mutexes(t_data *data)
 	{
 		if (pthread_mutex_init(&data->forks[m], NULL) != 0)
 		{
-			while (m >= 0)
+			while (m > 0)
 			{
-				pthread_mutex_destroy(&data->forks[m]);
 				m--;
+				pthread_mutex_destroy(&data->forks[m]);
 			}
+			free (data->forks);
 			return (-1);
 		}
 		m++;
@@ -90,5 +91,10 @@ t_data	*init_data(char **av)
 	my_data->eat_enough = false;
 	my_data->f_something_happens = false;
 	my_data->philos = init_philos(my_data);
+	if (my_data->philos == NULL)
+	{
+		free(my_data);
+		return (NULL);
+	}
 	return (my_data);
 }

@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:38:23 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/24 23:23:35 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/29 18:45:48 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_data
 	bool			dead_flag;
 	bool			eat_enough;
 	bool			f_something_happens;
-	time_t			begin_for_monitor;
 }	t_data;
 
 typedef struct s_philo
@@ -61,7 +60,6 @@ void		ft_error(char *str, t_data *data);
 void		my_usleep(int difference, t_philo *philo);
 void		freeing(t_data *data);
 void		free_mutexes(t_data *data);
-void		even_f_times(uint64_t time);
 
 // INIT
 t_data		*init_data(char **av);
@@ -69,11 +67,12 @@ int			init_mutexes(t_data *data);
 
 // TESTS
 //void	test(t_data *data);
+int			thread_test(t_data *data);
 
 // BEGINNING THE PROGRAMM
 void		*doch_sauron(void *pointer);
 void		*philo_routines(void *pointer);
 void		printings(t_philo *philo, char *str);
 int			thread_create(t_data *data);
-void		threads_join(t_data *data);
+int			threads_join(t_data *data);
 #endif

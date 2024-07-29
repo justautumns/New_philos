@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:15:56 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/24 23:37:41 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/29 15:29:50 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	*doch_sauron(void	*pointer)
 
 	data = (t_data *)pointer;
 	m = 0;
-	even_f_times(data->begin_time);
+	my_usleep(data->time_to_die, NULL);
 	while (m < data->number_of_philos)
 	{
 		if (check_bakalim(&data->philos[m]) == true)
