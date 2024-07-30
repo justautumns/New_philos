@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routines.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:24:55 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/29 15:29:41 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/30 15:23:44 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ void	*philo_routines(void *pointer)
 	t_philo	*philo;
 
 	philo = (t_philo *)pointer;
-	pthread_mutex_lock(&philo->data->dead_mutex);
+	pthread_mutex_lock(&philo->data->print_mutex);
 	philo->last_meal = philo->data->begin_time;
-	pthread_mutex_unlock(&philo->data->dead_mutex);
+	pthread_mutex_unlock(&philo->data->print_mutex);
 	if (philo->philo_id % 2)
 		my_usleep(100, NULL);
 	while (1)

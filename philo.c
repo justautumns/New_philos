@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:47:53 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/29 19:30:13 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/30 15:30:46 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ void	free_mutexes(t_data *data)
 	pthread_mutex_destroy(&data->print_mutex);
 	pthread_mutex_destroy(&data->dead_mutex);
 	free(data->forks);
+}
+int	second_part_of_main(t_data *start)
+{
+	if (thread_create(start) == -1)
+		return (ft_error("Thread/Allocation Error\n", start), -1);
+	if (threads_join(start) == -1)
+		return (ft_error("Thread/Join Error\n", start), -1);
+	free_mutexes(start);
+	freeing(start);
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -51,12 +61,8 @@ int	main(int ac, char **av)
 		return (ft_error("Thread creation fails\n", start), -1);
 	else
 	{
-		if (thread_create(start) == -1)
-			return (ft_error("Thread/Allocation Error\n", start), -1);
-		if (threads_join(start) == -1)
-			return (ft_error("Thread/Join Error\n", start), -1);
-		free_mutexes(start);
-		freeing(start);
+		if (second_part_of_main(start) == -1)
+			return (-1);
 	}
 	return (0);
 }
