@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:13:52 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/29 18:52:27 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/30 21:59:12 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	init_mutexes(t_data *data)
 		}
 		m++;
 	}
-	if (pthread_mutex_init(&data->print_mutex, NULL) != 0)
+	if (pthread_mutex_init(&data->print_mutex, NULL) != 0) // WHEN OTHER MUTEX INIT FAILS FREE FORKS!!! DESTROY THE MUTEXES YOU CREATED.
 		return (-1);
 	if (pthread_mutex_init(&data->dead_mutex, NULL) != 0)
 		return (-1);

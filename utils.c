@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 14:13:57 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/25 15:16:23 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/30 22:27:45 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,29 @@ uint64_t	get_time(void)
 	return ((time.tv_sec * (uint64_t)1000) + time.tv_usec / 1000);
 }
 
-void	my_usleep(int difference, t_philo *philo)
+void	my_usleep1(int difference, t_philo *philo)
 {
 	uint64_t	start;
 
 	start = get_time();
+	while ((get_time() - start) < (uint64_t)difference)
+	{
+		pthread_mutex_lock(&philo->data->print_mutex);
+		if (philo->data->number_of_philos == 1)
+		{
+			pthread_mutex_unlock(&philo->data->print_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->data->print_mutex);
+		usleep(100);
+	}
+}
+
+void	my_usleep(int difference, t_philo *philo)
+{
+	uint64_t	start;
+
+	start = get_time(); //Protect get_time!!
 	if (philo == NULL)
 	{
 		while ((get_time() - start) < (uint64_t)difference)

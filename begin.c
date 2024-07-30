@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:24:12 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/29 19:16:15 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/30 22:43:01 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,27 @@ int	thread_create(t_data *data)
 {
 	int		m;
 
+	if (data->f_something_happens == true)
+		return (-1);
 	m = 0;
 	data->begin_time = get_time();
+	if (data->begin_time == -1)
+		return (-1);
 	while (m < data->number_of_philos)
 	{
+		// data->f_something_happens = true;
 		if (pthread_create(&data->philos[m].thread, NULL,
 				&philo_routines, &data->philos[m]) != 0)
+			{
+			while (m > 0)
+			{
+				m--;
+				pthread_join(data->philos[m].thread, NULL);
+			}
 			return (-1);
+			}
+		// if (m == 4)
+		// 	break ;
 		m++;
 	}
 	if (data->number_of_philos > 1)

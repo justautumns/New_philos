@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:03:04 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/26 16:40:05 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/30 22:37:44 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool	error_check(char **str)
 	if (!str[1] || !str[2] || !str[3] || !str[4])
 		return (ft_error("Please enter in correct order\n", NULL), false);
 	if (ft_atoi(str[1]) > 200 || ft_atoi(str[1]) <= 0
-		|| !input_check(str[1]) || !overflow_check(str[1]))
+		|| !input_check(str[1]) || !overflow_check(str[1]))// check this
 		return (ft_error("Error: Incorrect philo value\n", NULL), false);
 	if (ft_atoi(str[2]) <= 0 || !input_check(str[2])
 		|| ft_atoi(str[2]) > INT_MAX || !overflow_check(str[2]))

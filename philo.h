@@ -6,13 +6,14 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:38:23 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/29 18:45:48 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/30 21:55:23 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <aliases.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -58,6 +59,7 @@ uint64_t	get_time(void);
 bool		error_check(char **str);
 void		ft_error(char *str, t_data *data);
 void		my_usleep(int difference, t_philo *philo);
+void		my_usleep1(int difference, t_philo *philo);
 void		freeing(t_data *data);
 void		free_mutexes(t_data *data);
 
