@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sauron.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:15:56 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/30 22:31:32 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/31 18:10:48 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	printings(t_philo *philo, char *str)
 bool	check_bakalim(t_philo *philo)
 {
 	time_t	time;
+	time_t	y;
 
 	time = get_time();
 	pthread_mutex_lock(&philo->data->print_mutex);
@@ -33,7 +34,8 @@ bool	check_bakalim(t_philo *philo)
 		philo->data->dead_flag = true;
 		pthread_mutex_unlock(&philo->data->dead_mutex);
 		pthread_mutex_lock(&philo->data->print_mutex);
-		printf("%ld %d died\n", get_time() - philo->data->begin_time,
+		y = get_time();
+		printf("%ld %d died\n", y - philo->data->begin_time,
 			philo->philo_id);
 		pthread_mutex_unlock(&philo->data->print_mutex);
 		return (true);
@@ -64,13 +66,12 @@ void	*doch_sauron(void	*pointer)
 
 	data = (t_data *)pointer;
 	m = 0;
-	pthread_mutex_lock(&data->dead_mutex);
-	if (data->f_something_happens == true)
-		return(pthread_mutex_unlock(&data->dead_mutex), NULL);
-	pthread_mutex_unlock(&data->dead_mutex);
-	my_usleep(data->time_to_die, NULL);
+	if (my_usleep(data->time_to_die, NULL) == -1)
+		return (NULL);
 	while (m < data->number_of_philos)
 	{
+		if (data->f_something_happens == true)
+			break ;
 		if (check_bakalim(&data->philos[m]) == true)
 			break ;
 		else if (hungry_or_not(&data->philos[m]) == true)

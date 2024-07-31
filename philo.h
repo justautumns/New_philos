@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:38:23 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/30 21:55:23 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/31 18:10:20 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <stdint.h>
 # include <pthread.h>
 # include <stdbool.h>
+
+#define TIME_ERROR ((time_t)(uint64_t)-1)
 
 typedef struct s_philo	t_philo;
 
@@ -58,8 +60,8 @@ int			ft_atoi(char *str);
 uint64_t	get_time(void);
 bool		error_check(char **str);
 void		ft_error(char *str, t_data *data);
-void		my_usleep(int difference, t_philo *philo);
-void		my_usleep1(int difference, t_philo *philo);
+int			my_usleep1(int difference, t_philo *philo);
+int			my_usleep(int difference, t_philo *philo);
 void		freeing(t_data *data);
 void		free_mutexes(t_data *data);
 

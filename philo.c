@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:47:53 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/30 22:48:34 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:49:02 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	second_part_of_main(t_data *start)
 		return (ft_error("Thread/Allocation Error\n", start), -1);
 	if (threads_join(start) == -1)
 		return (ft_error("Thread/Join Error\n", start), -1);
-	check(start);
+	//check(start);
 	free_mutexes(start);
 	freeing(start);
 	return (0);
@@ -77,9 +77,8 @@ int	main(int ac, char **av)
 		return (ft_error("Thread creation fails\n", start), -1);
 	else
 	{
-		if (second_part_of_main(start) == -1)
-			return (-1);
+	if (second_part_of_main(start) == -1)
+		return (-1);
 	}
 	return (0);
 }
-

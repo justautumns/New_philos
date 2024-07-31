@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routines.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:24:55 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/30 22:21:13 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/07/31 18:05:33 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,14 @@ static int	eating2(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->dead_mutex);
 	pthread_mutex_lock(&philo->data->print_mutex);
 	philo->last_meal = get_time();
+	if (philo->last_meal == TIME_ERROR)
+		return (pthread_mutex_unlock(&philo->data->print_mutex),
+		pthread_mutex_unlock(&philo->data->forks[philo->forks[1]]),
+		pthread_mutex_unlock(&philo->data->forks[philo->forks[0]]),
+		-16);
 	pthread_mutex_unlock(&philo->data->print_mutex);
-	my_usleep(philo->data->time_to_eat, philo);
+	if (my_usleep(philo->data->time_to_eat, philo) == -1)
+		return (-16);
 	pthread_mutex_lock(&philo->data->print_mutex);
 	philo->how_many_times_eated++;
 	pthread_mutex_unlock(&philo->data->print_mutex);
@@ -83,14 +89,16 @@ static int	sleeping_thinking(t_philo *philo)
 	if (!philo->data->dead_flag && !philo->data->eat_enough)
 		printings(philo, "is sleeping");
 	pthread_mutex_unlock(&philo->data->dead_mutex);
-	my_usleep(philo->data->time_to_sleep, philo);
+	if (my_usleep(philo->data->time_to_sleep, philo) == -1)
+		return (-15);
 	if (am_i_dead(philo) == 1)
 		return (-15);
 	pthread_mutex_lock(&philo->data->dead_mutex);
 	if (!philo->data->dead_flag && !philo->data->eat_enough)
 		printings(philo, "is thinking");
 	pthread_mutex_unlock(&philo->data->dead_mutex);
-	my_usleep(think, philo);
+	if (my_usleep(think, philo) == -1)
+		return (-15);
 	return (0);
 }
 
@@ -99,17 +107,12 @@ void	*philo_routines(void *pointer)
 	t_philo	*philo;
 
 	philo = (t_philo *)pointer;
-	pthread_mutex_lock(&philo->data->dead_mutex);
-	if (philo->data->f_something_happens == true)
-	{
-		return(pthread_mutex_unlock(&philo->data->dead_mutex), NULL);
-	}
-	pthread_mutex_unlock(&philo->data->dead_mutex);
 	pthread_mutex_lock(&philo->data->print_mutex);
 	philo->last_meal = philo->data->begin_time;
 	pthread_mutex_unlock(&philo->data->print_mutex);
 	if (philo->philo_id % 2)
-		my_usleep1(100, philo);
+		if (my_usleep1(100, philo) == -1)
+			return (NULL);
 	while (1)
 	{
 		if (eating(philo) == -16)
