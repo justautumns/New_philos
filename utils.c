@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 14:13:57 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/31 18:11:14 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/08/01 16:51:11 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	my_usleep1(int difference, t_philo *philo)
 	time_t	start;
 
 	start = get_time();
-	if (start == TIME_ERROR)
+	if ((uint64_t)start == TIME_ERROR)
 		return (-1);
 	while ((get_time() - start) < (uint64_t)difference)
 	{
@@ -72,7 +72,7 @@ int	my_usleep(int difference, t_philo *philo)
 	time_t	start;
 
 	start = get_time();
-	if (start == TIME_ERROR)
+	if ((uint64_t)start == TIME_ERROR)
 		return (-1);
 	if (philo == NULL)
 	{
@@ -93,5 +93,14 @@ int	my_usleep(int difference, t_philo *philo)
 			usleep(100);
 		}
 	}
+	return (0);
+}
+
+int	am_i_dead(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->dead_mutex);
+	if ((int)(get_time() - philo->last_meal) >= philo->data->time_to_die)
+		return (pthread_mutex_unlock(&philo->data->dead_mutex), 1);
+	pthread_mutex_unlock(&philo->data->dead_mutex);
 	return (0);
 }

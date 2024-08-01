@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sauron.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:15:56 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/07/31 18:10:48 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:20:42 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ void	*doch_sauron(void	*pointer)
 		return (NULL);
 	while (m < data->number_of_philos)
 	{
-		if (data->f_something_happens == true)
-			break ;
 		if (check_bakalim(&data->philos[m]) == true)
 			break ;
 		else if (hungry_or_not(&data->philos[m]) == true)
