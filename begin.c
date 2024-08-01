@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:24:12 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/08/01 16:51:30 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:05:36 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	thread_create(t_data *data)
 	while (m < data->number_of_philos)
 	{
 		if (pthread_create(&data->philos[m].thread, NULL,
-				&philo_routines, &data->philos[m]) != 0 || m == 2)
+				&philo_routines, &data->philos[m]) != 0)
 		{
 			data->dead_flag = true;
 			data->f_something_happens = true;
