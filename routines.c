@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routines.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:24:55 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/08/01 16:52:06 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/08/11 18:12:16 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static int	thinking_part(t_philo *philo)
 					+ philo->data->time_to_eat)) / 2);
 	if (think <= 0)
 		think = 1;
+	else if (think > 200)
+		think = 60;
 	if (am_i_dead(philo) == 1)
 		return (-15);
 	pthread_mutex_lock(&philo->data->dead_mutex);
@@ -57,6 +59,8 @@ static int	eating2(t_philo *philo)
 
 static int	eating(t_philo *philo)
 {
+	if (am_i_done(philo) == 1)
+		return (-16);
 	pthread_mutex_lock(&philo->data->dead_mutex);
 	if (philo->data->eat_enough == true || philo->data->dead_flag == true)
 		return (pthread_mutex_unlock(&philo->data->dead_mutex), -16);
@@ -83,6 +87,8 @@ static int	eating(t_philo *philo)
 
 static int	sleeping_thinking(t_philo *philo)
 {
+	if (am_i_done(philo) == 1)
+		return (-15);
 	pthread_mutex_lock(&philo->data->dead_mutex);
 	if (philo->data->eat_enough == true || philo->data->dead_flag == true)
 		return (pthread_mutex_unlock(&philo->data->dead_mutex), -15);

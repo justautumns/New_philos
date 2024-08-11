@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sauron.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:15:56 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/08/01 15:20:42 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/08/11 17:39:43 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,17 @@ void	*doch_sauron(void	*pointer)
 		return (NULL);
 	while (m < data->number_of_philos)
 	{
-		if (check_bakalim(&data->philos[m]) == true)
+		if (hungry_or_not(&data->philos[m]) == true)
 			break ;
-		else if (hungry_or_not(&data->philos[m]) == true)
+		else if (check_bakalim(&data->philos[m]) == true)
 			break ;
+		pthread_mutex_lock(&data->dead_mutex);
+		if (data->philos[m].ate_enough == true)
+		{
+			pthread_mutex_unlock(&data->dead_mutex);
+			break;
+		}
+		pthread_mutex_unlock(&data->dead_mutex);
 		m++;
 		if (m == data->number_of_philos)
 			m = 0;

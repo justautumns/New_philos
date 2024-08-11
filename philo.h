@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:38:23 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/08/01 16:49:06 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/08/11 16:11:03 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				philo_id;
+	bool			ate_enough;
 	int				how_many_times_eated;
 	int				forks[2];
 	time_t			last_meal;
@@ -79,4 +80,5 @@ void		printings(t_philo *philo, char *str);
 int			thread_create(t_data *data);
 int			threads_join(t_data *data);
 int			am_i_dead(t_philo *philo);
+int			am_i_done(t_philo *philo);
 #endif

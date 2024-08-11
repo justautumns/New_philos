@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 14:13:57 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/08/01 16:51:11 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/08/11 17:30:52 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,17 @@ int	my_usleep(int difference, t_philo *philo)
 	}
 	return (0);
 }
-
+int	am_i_done(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->dead_mutex);
+	if (philo->data->number_of_eatings != 0 && philo->how_many_times_eated == philo->data->number_of_eatings)
+	{
+		philo->ate_enough = true;
+		return (pthread_mutex_unlock(&philo->data->dead_mutex), 1);
+	}
+	pthread_mutex_unlock(&philo->data->dead_mutex);
+	return (0);
+}
 int	am_i_dead(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->dead_mutex);
