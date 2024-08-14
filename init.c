@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:13:52 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/08/11 16:15:12 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:23:55 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ t_philo	*init_philos(t_data *data)
 		philos[m].data = data;
 		philos[m].how_many_times_eated = 0;
 		philos[m].last_meal = 0;
-		philos[m].philo_id = m + 1;
 		philos[m].ate_enough = false;
+		philos[m].philo_id = m + 1;
 		init_spoons(data, &philos[m]);
 	}
 	return (philos);

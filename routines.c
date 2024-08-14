@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routines.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:24:55 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/08/11 18:12:16 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/08/14 23:59:14 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static int	thinking_part(t_philo *philo)
 	think = ((philo->data->time_to_die - (philo->data->time_to_sleep
 					+ philo->data->time_to_eat)) / 2);
 	if (think <= 0)
-		think = 1;
-	else if (think > 200)
-		think = 60;
+		think = 0;
+	else if (think > 600)
+		think = 200;
 	if (am_i_dead(philo) == 1)
 		return (-15);
 	pthread_mutex_lock(&philo->data->dead_mutex);
@@ -36,7 +36,7 @@ static int	thinking_part(t_philo *philo)
 static int	eating2(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->dead_mutex);
-	if (!philo->data->dead_flag && !philo->data->eat_enough)
+	if (!philo->data->dead_flag)
 		printings(philo, "is eating");
 	pthread_mutex_unlock(&philo->data->dead_mutex);
 	pthread_mutex_lock(&philo->data->print_mutex);
@@ -50,7 +50,8 @@ static int	eating2(t_philo *philo)
 	if (my_usleep(philo->data->time_to_eat, philo) == -1)
 		return (-16);
 	pthread_mutex_lock(&philo->data->print_mutex);
-	philo->how_many_times_eated++;
+	if (!philo->ate_enough)
+		philo->how_many_times_eated++;
 	pthread_mutex_unlock(&philo->data->print_mutex);
 	pthread_mutex_unlock(&philo->data->forks[philo->forks[1]]);
 	pthread_mutex_unlock(&philo->data->forks[philo->forks[0]]);
@@ -62,7 +63,7 @@ static int	eating(t_philo *philo)
 	if (am_i_done(philo) == 1)
 		return (-16);
 	pthread_mutex_lock(&philo->data->dead_mutex);
-	if (philo->data->eat_enough == true || philo->data->dead_flag == true)
+	if (philo->data->dead_flag == true)
 		return (pthread_mutex_unlock(&philo->data->dead_mutex), -16);
 	pthread_mutex_unlock(&philo->data->dead_mutex);
 	pthread_mutex_lock(&philo->data->forks[philo->forks[0]]);
@@ -81,16 +82,13 @@ static int	eating(t_philo *philo)
 		return (pthread_mutex_unlock(&philo->data->forks[philo->forks[1]]),
 			pthread_mutex_unlock(&philo->data->forks[philo->forks[0]]), -16);
 	printings(philo, "has taken a fork");
-	eating2(philo);
-	return (0);
+	return (eating2(philo), 0);
 }
 
 static int	sleeping_thinking(t_philo *philo)
 {
-	if (am_i_done(philo) == 1)
-		return (-15);
 	pthread_mutex_lock(&philo->data->dead_mutex);
-	if (philo->data->eat_enough == true || philo->data->dead_flag == true)
+	if (philo->data->dead_flag == true)
 		return (pthread_mutex_unlock(&philo->data->dead_mutex), -15);
 	pthread_mutex_unlock(&philo->data->dead_mutex);
 	if (am_i_dead(philo) == 1)
@@ -99,6 +97,8 @@ static int	sleeping_thinking(t_philo *philo)
 	if (!philo->data->dead_flag && !philo->data->eat_enough)
 		printings(philo, "is sleeping");
 	pthread_mutex_unlock(&philo->data->dead_mutex);
+	if (am_i_done(philo) == 1)
+		return (-16);
 	if (my_usleep(philo->data->time_to_sleep, philo) == -1)
 		return (-15);
 	if (thinking_part(philo) == -1)

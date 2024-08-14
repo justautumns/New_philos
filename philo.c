@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:47:53 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/08/11 15:45:00 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/08/14 23:59:31 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,6 @@ void	freeing(t_data *data)
 	free(data);
 }
 
-void	check(t_data *data)
-{
-	int	m;
-
-	m = 0;
-	printf("%d\n", data->number_of_philos);
-	while (m < data->number_of_philos)
-	{
-		printf("Philo id :%d , how many times ate: %d\n",
-			data->philos[m].philo_id,
-			data->philos[m].how_many_times_eated);
-		m++;
-	}
-}
 void	free_mutexes(t_data *data)
 {
 	int	k;
@@ -49,13 +35,20 @@ void	free_mutexes(t_data *data)
 
 int	second_part_of_main(t_data *start)
 {
+	bool	alright;
+
+	alright = false;
 	if (thread_create(start) == -1)
+	{
+		alright = true;
 		ft_error("Thread creation error\n", NULL);
+	}
 	if (threads_join(start) == -1)
 		return (ft_error("Thread/Join Error\n", start), -1);
-	check(start);
 	free_mutexes(start);
 	freeing(start);
+	if (alright == true)
+		return (-1);
 	return (0);
 }
 
@@ -78,3 +71,17 @@ int	main(int ac, char **av)
 		return (-1);
 	return (0);
 }
+/*void	check(t_data *data)
+{
+	int	m;
+
+	m = 0;
+	printf("%d\n", data->number_of_philos);
+	while (m < data->number_of_philos)
+	{
+		printf("Philo id :%d , how many times ate: %d\n",
+			data->philos[m].philo_id,
+			data->philos[m].how_many_times_eated);
+		m++;
+	}
+}*/

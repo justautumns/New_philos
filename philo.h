@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:38:23 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/08/11 16:11:03 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:23:57 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				philo_id;
-	bool			ate_enough;
 	int				how_many_times_eated;
 	int				forks[2];
+	bool			ate_enough;
 	time_t			last_meal;
 	struct s_data	*data;
 }	t_philo;
@@ -64,6 +64,7 @@ int			my_usleep1(int difference, t_philo *philo);
 int			my_usleep(int difference, t_philo *philo);
 void		freeing(t_data *data);
 void		free_mutexes(t_data *data);
+void		*ft_calloc(size_t nmemb, size_t size);
 
 // INIT
 t_data		*init_data(char **av);
