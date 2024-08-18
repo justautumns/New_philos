@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 14:13:57 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/08/12 20:21:29 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:53:15 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ uint64_t	get_time(void)
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) == -1)
-		return (printf("Time error\n"), TIME_ERROR);
+		return (ft_error("Time error occured\n", NULL), TIME_ERROR);
 	return ((time.tv_sec * (uint64_t)1000) + time.tv_usec / 1000);
 }
 

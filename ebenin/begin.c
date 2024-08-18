@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:24:12 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/08/12 20:21:23 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:54:30 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	thread_create(t_data *data)
 	m = 0;
 	data->begin_time = get_time();
 	if ((uint64_t)data->begin_time == TIME_ERROR)
-		return (-1);
+		return (-2);
 	pthread_mutex_lock(&data->dead_mutex);
 	while (m < data->number_of_philos)
 	{
@@ -72,7 +72,7 @@ int	threads_join(t_data *data)
 		m++;
 	}
 	if (data->f_something_happens == true)
-		return (0);
+		return (1);
 	if (data->number_of_philos > 1)
 	{
 		if (pthread_join(data->monitor, NULL) != 0)

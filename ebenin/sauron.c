@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:15:56 by mehmeyil          #+#    #+#             */
-/*   Updated: 2024/08/12 20:57:30 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:51:19 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	printings(t_philo *philo, char *str)
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
-bool	check_bakalim(t_philo *philo)
+static bool	check_bakalim(t_philo *philo)
 {
 	time_t	time;
 	time_t	y;
@@ -41,6 +41,8 @@ bool	check_bakalim(t_philo *philo)
 	time = get_time();
 	if ((uint64_t) time == TIME_ERROR)
 		return (true);
+	if (am_i_done(philo) == 1)
+		return (false);
 	pthread_mutex_lock(&philo->data->print_mutex);
 	if ((time - philo->last_meal) >= philo->data->time_to_die)
 	{
@@ -60,19 +62,23 @@ bool	check_bakalim(t_philo *philo)
 	return (pthread_mutex_unlock(&philo->data->print_mutex), false);
 }
 
-bool	hungry_or_not(t_philo *philo)
+bool	check_everyone_is_done(t_data *data)
 {
-	pthread_mutex_lock(&philo->data->print_mutex);
-	if (philo->data->number_of_eatings != 0 && philo->how_many_times_eated
-		== philo->data->number_of_eatings)
+	int	m;
+	int	k;
+
+	k = 0;
+	m = 0;
+	pthread_mutex_lock(&data->dead_mutex);
+	while (m < data->number_of_philos)
 	{
-		pthread_mutex_unlock(&philo->data->print_mutex);
-		pthread_mutex_lock(&philo->data->dead_mutex);
-		philo->data->eat_enough = true;
-		pthread_mutex_unlock(&philo->data->dead_mutex);
-		return (true);
+		if (data->philos[m].ate_enough == true)
+			k++;
+		if (k == data->number_of_philos)
+			return (pthread_mutex_unlock(&data->dead_mutex), true);
+		m++;
 	}
-	pthread_mutex_unlock(&philo->data->print_mutex);
+	pthread_mutex_unlock(&data->dead_mutex);
 	return (false);
 }
 
@@ -89,7 +95,7 @@ void	*doch_sauron(void	*pointer)
 	{
 		if (check_bakalim(&data->philos[m]) == true)
 			break ;
-		else if (hungry_or_not(&data->philos[m]) == true)
+		else if (check_everyone_is_done(data) == true)
 			break ;
 		m++;
 		if (m == data->number_of_philos)
